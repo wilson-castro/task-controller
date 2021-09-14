@@ -1,12 +1,12 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import { StyledFooter } from './styles';
 
 function Footer() {
   return (
-    <footer className="Footer">
-      <h1>Footer</h1>
-    </footer>
+    <StyledFooter className="Footer">
+      <span>Desenvolvido por <b>Wilson Castro</b>/2021</span>
+    </StyledFooter>
   )
 }
 

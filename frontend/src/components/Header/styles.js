@@ -35,7 +35,6 @@ export const Button = styled.button`
        0 2px 49px 0 rgba(0, 0, 0, 0.03);
     }
     :active{
-      transform: scale(0.80);
     }
 
   
