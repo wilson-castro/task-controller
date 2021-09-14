@@ -1,12 +1,28 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import { FaBell } from "react-icons/fa";
+import { BiSearch } from "react-icons/bi";
+
+
+import { StyledHeader, Button, Input, StyledInputGroup } from './styles';
 
 function Header() {
   return (
-    <header className="Header">
-      <h1>Header</h1>
-    </header>
+    <StyledHeader className="Header">
+
+      <StyledInputGroup className="inputWithIcon">
+        <Input
+          name="searchActivitiesInput"
+          type="text"
+          placeholder="Localizar atividade..."
+        />
+        <BiSearch size={36} color={'#222'} />
+      </StyledInputGroup>
+
+      <Button>
+        <FaBell size={40} />
+      </Button>
+    </StyledHeader>
   )
 }
 

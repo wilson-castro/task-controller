@@ -2,6 +2,12 @@
 
 :root{
   --header-height: 90px;
+  --footer-height: 40px;
+  --header-bgColor:rgb(102, 92, 196);
+
+  --shadow: 
+  0 2px 23px 0 rgba(0, 0, 0, 0.3),
+  0 2px 49px 0 rgba(0, 0, 0, 0.1);
 }
 
 .App{
@@ -13,7 +19,7 @@
   grid-template-rows:
   var(--header-height)
   1fr
-  50px;
+  var(--footer-height);
   grid-template-areas: 
   "Header"
   "pageContent"
