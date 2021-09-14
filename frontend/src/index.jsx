@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 
 import GlobalStyle from './styles/global'
 
-
 ReactDOM.render(
   <>
     <App />
