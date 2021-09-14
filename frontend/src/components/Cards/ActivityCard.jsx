@@ -1,14 +1,18 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-// import { Container } from './styles';
 
-function CardTemplate() {
+import { cardContainer } from './styles';
+
+function CardTemplate({ text }) {
   return (
-    <Card>
-      <Typography gutterBottom>
-        Word of the Day
-      </Typography>
+    <Card style={cardContainer}>
+      <CardContent>
+        <Typography gutterBottom>
+          {text}
+        </Typography>
+      </CardContent>
     </Card>
   )
 }

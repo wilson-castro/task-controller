@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 4rem 3.5rem;
-  position:  absolute;
+  margin: 4rem 0.1rem 4rem 3.5rem;
   background-color: rgb(239, 237, 238);
-  border-radius: 3px;
+  border-radius: 3.5px;
   width: 350px;
 
   .Cards{
@@ -14,6 +13,8 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.header`
+  border-top-left-radius : 3.5px;
+  border-top-right-radius: 3.5px;
   position: relative;
   display: flex;
   align-items: center;
@@ -25,4 +26,4 @@ export const Header = styled.header`
   
   background-color: rgb(68, 99, 240);
   color: #FFF;
-`
+`;

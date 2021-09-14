@@ -1,13 +1,19 @@
 import React from 'react';
 
-import List from "../List/ActivitiesList"
+import List from "../List/ActivitiesList";
+import { StyledMain } from './styles';
 
-function Main() {
+function Main(props) {
+  const { lists } = props;
+
   return (
-    <main className="Content">
-      <List title="Teste" />
-    </main>
+    <StyledMain>
+      {lists.map(list => (
+        <List title={list.title} cards={list.cards} />
+      ))}
+    </StyledMain >
   )
 }
 
-export default Main;
+
+export default (Main);

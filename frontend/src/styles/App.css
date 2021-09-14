@@ -23,7 +23,7 @@
   var(--footer-height);
   grid-template-areas: 
   "Header"
-  "pageContent"
+  "Content"
   "Footer";
   
 }
