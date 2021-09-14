@@ -1,28 +1,29 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 4rem 0.1rem 4rem 3.5rem;
+  margin: 1rem;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 3.5px; 
   background-color: rgb(239, 237, 238);
-  border-radius: 3.5px;
-  width: 350px;
-
+ 
   .Cards{
-    margin: 10px;
-    padding: 10px;
+    margin: 8px;
+    padding: 5px;
   }
 `;
 
 export const Header = styled.header`
-  border-top-left-radius : 3.5px;
-  border-top-right-radius: 3.5px;
   position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 1.8rem;
-  width: 100%;
+  padding: 1rem;
+  
+  border-top-left-radius : 3.5px;
+  border-top-right-radius: 3.5px;
 
-  font-size: 1.8rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 700;
   
   background-color: rgb(68, 99, 240);
   color: #FFF;

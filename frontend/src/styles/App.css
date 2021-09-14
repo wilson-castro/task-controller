@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
 
 :root{
-  --header-height: 90px;
-  --footer-height: 70px;
+  --header-height: 60px;
+  --footer-height: 40px;
   --header-bgColor:rgb(102, 92, 196);
   --footer-bgColor: rgb(216, 210, 242);
 
   --shadow: 
-  0 2px 23px 0 rgba(0, 0, 0, 0.25),
+  0 2px 23px 0 rgba(0, 0, 0, 0.1),
   0 2px 49px 0 rgba(0, 0, 0, 0.1);
 }
 

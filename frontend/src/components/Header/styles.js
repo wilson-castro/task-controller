@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledHeader = styled.header`
   background-color: var(--header-bgColor);
   color: #FFF;
-  padding: 0 50px;
+  padding: 0 20px;
   overflow: hidden;
   white-space: hidden;
   box-shadow: var(--shadow);
@@ -46,14 +46,13 @@ export const Button = styled.button`
 
 export const Input = styled.input`
   margin: 8px 0;
-  padding: 8px 15px;
-  padding-right:10px;
-  height: 55px;
-
+  padding: 8px 12px 8px 8px;
+  height: 35px;
+  
   background-color: rgb(193, 190, 234);
   color:#FFF;
   border-radius:6px;
-  font-size:  25px;
+  font-size:  1rem;
   border: none;
 
   

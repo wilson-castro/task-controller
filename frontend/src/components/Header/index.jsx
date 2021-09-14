@@ -16,11 +16,11 @@ function Header() {
           type="text"
           placeholder="Localizar atividade..."
         />
-        <BiSearch size={36} color={'#222'} />
+        <BiSearch size={15} color={'#222'} />
       </StyledInputGroup>
 
       <Button>
-        <FaBell size={40} />
+        <FaBell size={25} />
       </Button>
     </StyledHeader>
   )
