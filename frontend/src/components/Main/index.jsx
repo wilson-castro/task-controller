@@ -1,11 +1,11 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import List from "../List/ActivitiesList"
 
 function Main() {
   return (
     <main className="Content">
-      <h1>Content</h1>
+      <List title="Teste" />
     </main>
   )
 }
