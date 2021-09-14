@@ -29,12 +29,16 @@ export const Button = styled.button`
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    :focus, :hover{
+    :hover, :focus{
       background-color:rgb(108, 99, 191);
       box-shadow: 0 2px 23px 0 rgba(0, 0, 0, 0.05),
        0 2px 49px 0 rgba(0, 0, 0, 0.03);
     }
+    :focus{
+      outline: none;
+    }
     :active{
+      transform: scale(80%);
     }
 
   
