@@ -9,7 +9,7 @@ function ListTemplate({ title, cards }) {
     <Container>
       <Header>{title}</Header>
       <div className="Cards">
-        {cards.map(card => <Card text={card.text} />)}
+        {cards.map(card => <Card key={card.id} text={card.text} />)}
       </div>
     </Container>
   )

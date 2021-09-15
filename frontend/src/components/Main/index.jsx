@@ -7,9 +7,9 @@ function Main(props) {
   const { lists } = props;
 
   return (
-    <StyledMain>
+    <StyledMain className="Content">
       {lists.map(list => (
-        <List title={list.title} cards={list.cards} />
+        <List key={list.id} title={list.title} cards={list.cards} />
       ))}
     </StyledMain >
   )

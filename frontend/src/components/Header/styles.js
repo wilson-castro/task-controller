@@ -46,13 +46,13 @@ export const Button = styled.button`
 
 export const Input = styled.input`
   margin: 8px 0;
-  padding: 8px 12px 8px 8px;
-  height: 35px;
+  padding: 4px 6px 4px 8px;
+  height: 30px;
   
   background-color: rgb(193, 190, 234);
   color:#FFF;
   border-radius:6px;
-  font-size:  1rem;
+  font-size:  0.8rem;
   border: none;
 
   

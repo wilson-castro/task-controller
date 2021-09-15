@@ -20,7 +20,7 @@ function Header() {
       </StyledInputGroup>
 
       <Button>
-        <FaBell size={25} />
+        <FaBell size={19} />
       </Button>
     </StyledHeader>
   )

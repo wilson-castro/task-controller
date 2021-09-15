@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
 
 :root{
-  --header-height: 60px;
+  --header-height: 50px;
   --footer-height: 40px;
   --header-bgColor:rgb(102, 92, 196);
   --footer-bgColor: rgb(216, 210, 242);
@@ -23,7 +23,7 @@
   var(--footer-height);
   grid-template-areas: 
   "Header"
-  "Content"
+  "pageContent"
   "Footer";
   
 }
