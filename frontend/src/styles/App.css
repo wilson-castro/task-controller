@@ -4,6 +4,7 @@
   --header-height: 50px;
   --footer-height: 40px;
   --header-bgColor:rgb(102, 92, 196);
+  --header-fontColor:rgb(68, 99, 240);
   --footer-bgColor: rgb(216, 210, 242);
 
   --shadow: 
@@ -13,17 +14,37 @@
 
 .App{
   background: #FFF;
-  height: 100vh;
-
-  /*Layout em Grid */ 
   display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr;
   grid-template-rows:
-  var(--header-height)
-  1fr
-  var(--footer-height);
-  grid-template-areas: 
-  "Header"
-  "pageContent"
-  "Footer";
-  
+   var(--header-height)
+   1fr
+   var(--footer-height) ;
+   grid-template-areas:
+    "Header"
+    "Content1"
+    "Footer"
+   ;
+}
+
+header.Header{
+  grid-area: Header;
+}
+main.Content{
+  grid-area: Content1;
+}
+footer.Footer{
+  grid-area: Footer;
+}
+
+@media only screen and (max-width: 550px) {
+  .App {
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr 60px ;
+    grid-template-areas:
+    "Header"
+    "Content1"
+    "Footer";
+  }
 }

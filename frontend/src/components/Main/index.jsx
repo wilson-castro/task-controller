@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import List from "../List/ActivitiesList";
-import { StyledMain } from './styles';
+import { Container } from './styles';
+import ActionButton from '../template/ActionButton';
 
-function Main(props) {
-  const { lists } = props;
+import { loadLists } from '../../backend/services/api';
 
-  return (
-    <StyledMain className="Content">
-      {lists.map(list => (
-        <List key={list.id} title={list.title} cards={list.cards} />
-      ))}
-    </StyledMain >
-  )
+class Main extends Component {
+  render() {
+    const lists = loadLists();
+
+    return (
+      <main className="Content">
+        <Container>
+          {lists.map(list => (
+            <List key={list.id} title={list.title} cards={list.cards} />
+          ))}
+          <ActionButton list />
+        </Container>
+      </main>
+    )
+  }
 }
 
+const mapStateToProps = state => ({ lists: state.lists })
 
-export default (Main);
+export default connect(mapStateToProps)(Main);

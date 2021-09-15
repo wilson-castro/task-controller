@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "0.18.0",
     "bootstrap": "4.1.1",
+    "firebase": "^8.7.1",
+    "firebase-tools": "^9.16.0",
     "font-awesome": "4.7.0",
     "lodash.throttle": "^4.1.1",
     "react": "^17.0.2",
