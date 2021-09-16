@@ -1,12 +1,11 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import TextArea from "react-textarea-autosize";
-import Button from '@material-ui/core/Button'
 
 import { styles } from "../../styles/ButtonStyles";
 function AddGroupButton(props) {
   return (
-    <div>
+    <div style={{ marginTop: "1rem" }}>
       <Card style={styles.cardStyleContainer}>
         <TextArea
           placeholder={props.placeholder}
@@ -18,11 +17,6 @@ function AddGroupButton(props) {
           style={styles.styleTextArea}
         />
       </Card>
-      <div style={styles.formButtonGroup}>
-        <Button variant="contained" style={styles.buttonStyleContainer}>
-          {props.buttonTitle}
-        </Button>
-      </div>
     </div>
   )
 }

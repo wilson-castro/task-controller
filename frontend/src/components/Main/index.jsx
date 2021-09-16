@@ -1,29 +1,36 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 
 import List from "../List/ActivitiesList";
 import { Container } from './styles';
 import ActionButton from '../template/ActionButton';
 
-import { loadLists } from '../../backend/services/api';
-
 class Main extends Component {
   render() {
-    const lists = loadLists();
-
     return (
       <main className="Content1">
         <Container>
-          {lists.map(list => (
-            <List key={list.id} title={list.title} cards={list.cards} />
+          {this.props.lists && this.props.lists.map(list => (
+            <List key={list.id} listID={list.id} title={list.title} cards={list.cards} list={list} />
           ))}
-          <ActionButton list />
+          <ActionButton list={this.props.lists} />
         </Container>
       </main>
     )
   }
 }
 
-const mapStateToProps = state => ({ lists: state.lists })
+const mapStateToProps = state => {
+  const lists = state.firestore.ordered.lists;
+  return { lists: lists };
+};
 
-export default connect(mapStateToProps)(Main);
+export default compose(
+  connect(mapStateToProps), firestoreConnect((ownProps) => [{
+    collection: "lists",
+    orderBy: ["id", "asc"]
+  },
+  ])
+)(Main)

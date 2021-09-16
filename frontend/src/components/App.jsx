@@ -1,8 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
-import '../styles/App.css';
-import React, { Component } from 'react'
+import "react-toastify/dist/ReactToastify.css";
 
+import React, { Component } from 'react'
+import { ToastContainer } from "react-toastify";
+
+import '../styles/App.css';
 import Main from './Main';
 import Header from './Header';
 
@@ -11,6 +14,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <ToastContainer />
         <Header />
         <Main />
       </div>

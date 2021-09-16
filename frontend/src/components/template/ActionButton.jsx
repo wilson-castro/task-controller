@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
+import { connect } from "react-redux";
+import { addList, updateList } from "../../store/actions";
 
 import { MdAdd } from "react-icons/md";
 
 import AddCardPopup from "./AddCardPopup";
 import AddGroupButton from "./AddGroupButton";
+import StyledAddButton from "./AddButton"
 
 class ActionButton extends Component {
   constructor(props) {
@@ -20,9 +22,7 @@ class ActionButton extends Component {
   //CACTHER KEY
   keyHandler(event) {
     if (event.key === 'Enter') {
-      console.log(this.state.text);
-    } else if (event.key === 'Escape') {
-
+      this.handleAddList()
     }
 
   }
@@ -46,6 +46,38 @@ class ActionButton extends Component {
     this.setState({ text: event.target.value })
   )
 
+  //ADD A CARD/UPDATE_LIST AND ADD A LIST
+  handleAddList = () => {
+    const { text } = this.state;
+    const id = this.props.list.length || 0
+    if (text) {
+      this.props.addList({ text, id })
+      this.setState({ text: "" })
+    }
+    return;
+  }
+  handleAddCard = () => {
+    const { listObj: oldList } = this.props
+
+    const { text } = this.state
+    const id = oldList.cards.length || 0
+    const newCard = {
+      id,
+      text,
+      completed: false,
+      dataDeadline: "14/02/2002"
+    }
+    const list = { ...oldList, cards: [...oldList.cards, newCard] }
+
+    this.props.updateList({ list, newCard })
+    console.log();
+    this.setState({ text: "" })
+    // if (text) {
+    //   dispatch(addCard(listID, text))
+    //   this.setState({ text: "" })
+    // }
+  }
+
   //ADD BUTTON CARD OR GRUP
   renderAddButton = () => {
     const { list } = this.props;
@@ -56,8 +88,11 @@ class ActionButton extends Component {
     return (
       //ADD GROUP/LIST  OR CARDS
       <StyledAddButton
+        style={list ?
+          { border: "1px solid rgb(221, 221, 221)" }
+          : {}}
         onClick={this.openForm}
-        className="OpenForButtonGroup">
+        className="OpenForButtonGroup" >
         <p>{buttonText}</p>
         <MdAdd color="rgb(68, 99, 240)" />
       </StyledAddButton>)
@@ -68,7 +103,7 @@ class ActionButton extends Component {
     const { list } = this.props
 
     //Check for set the text
-    const placeholder = list ? "Digite o nome do grupo..." : "Digite o card..."
+    const placeholder = list ? "Digite o nome do grupo..." : "Digite a atividade..."
     const buttonTitle = list ? "Salvar" : "Adicionar card"
 
     //Test if do add a group or add a card
@@ -79,12 +114,15 @@ class ActionButton extends Component {
         value={this.state.text}
         onChange={this.handleInputChange}
         onKeyUp={this.keyHandler}
-        buttonTitle={buttonTitle} />
+        buttonTitle={buttonTitle}
+        onMouseDown={this.handleAddList}
+      />
     ) : (
       <AddCardPopup placeholder={placeholder}
         onBlur={this.closeForm}
         value={this.state.text}
         onChange={this.handleInputChange}
+        saveCard={this.handleAddCard}
       />
     )
   }
@@ -93,44 +131,12 @@ class ActionButton extends Component {
   }
 }
 
-// STYLED COMPONENTS
-const StyledAddButton = styled.div`
-
-  display: flex;
-  align-items: center;
-
-  height: 36px;
-  width: 240px;
-  margin-top: 1rem;
-  padding: 1.5rem;
-
-  cursor: pointer;
-  border: 1px solid rgb(221, 221, 221);
-  border-radius: 3.5px; 
-
-  background-color: rgb(239, 237, 238);
-  color: rgb(68, 99, 240);
-  font-weight: 500; 
-
-  min-height: 32px;
-
-  transition: background-color 85ms ease-in, opacity 40ms ease-in,
-    border-color 85ms ease-in;
-
-  :hover,:focus{
-    background-color: rgb(229, 227, 218);
-  }
-  :focus{
-      outline: none;
-  }
-  :active{
-    transform: scale(95%);
-  }
-
-  p{ margin: 0}
-`;
-// END STYLED COMPONENTS
-
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addList: (list) => dispatch(addList(list)),
+    updateList: (list) => dispatch(updateList(list))
+  };
+};
 
 // EXPORT COMPONENT
-export default ActionButton;
+export default connect(null, mapDispatchToProps)(ActionButton);

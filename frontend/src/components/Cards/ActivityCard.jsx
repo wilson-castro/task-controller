@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './ActivityCard.css'
+import '../../styles/ActivityCard.css'
 
 function CardTemplate({ card }) {
   return (
