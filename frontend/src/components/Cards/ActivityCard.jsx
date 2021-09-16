@@ -1,22 +1,34 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
+// import Card from '@material-ui/core/Card';
 // import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 
-import { useStyles } from './styles';
+import './ActivityCard.css'
 
-function CardTemplate({ text }) {
-  const classes = useStyles();
+// import { useStyles } from './styles';
 
+function CardTemplate({ card }) {
+  console.log(card);
   return (
-    <Card className={classes.card}>
-      {/* <CardContent className={classes.cardContent}> */}
-      <Typography className={classes.typography} gutterBottom>
-        {text}
-      </Typography>
-      {/* </CardContent> */}
-    </Card >
+    <div className="card">
+      <div className="Card-Content">
+        <div className="Card-Text">{card.text}</div>
+        <div className="Card-DeadLine">{card.deadline}</div>
+      </div>
+    </div>
+
   )
+  // return (
+  //   <Card className={classes.root}>
+  //     {/* <CardContent className={classes.cardContent}> */}
+  //     <CardContent >
+  //       {/* <Typography className={classes.typography} gutterBottom> */}
+  //       <Typography >
+  //         {text}
+  //       </Typography>
+  //     </CardContent>
+  //   </Card >
+  // )
 }
 
 export default CardTemplate;

@@ -1,0 +1,20 @@
+.card {
+  position: relative;
+  cursor: pointer;
+  background: white;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 13px;
+  overflow-wrap: break-word;
+  min-height: 18px;
+  min-width: 240px;
+  margin-bottom: 8;
+  position: relative;
+
+}
+
+.card:hover {
+  background: #f5f6f7;
+}
+

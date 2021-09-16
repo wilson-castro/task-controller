@@ -12,7 +12,7 @@ class Main extends Component {
     const lists = loadLists();
 
     return (
-      <main className="Content">
+      <main className="Content1">
         <Container>
           {lists.map(list => (
             <List key={list.id} title={list.title} cards={list.cards} />

@@ -14,37 +14,5 @@
 
 .App{
   background: #FFF;
-  display: grid;
   height: 100vh;
-  grid-template-columns: 1fr;
-  grid-template-rows:
-   var(--header-height)
-   1fr
-   var(--footer-height) ;
-   grid-template-areas:
-    "Header"
-    "Content1"
-    "Footer"
-   ;
-}
-
-header.Header{
-  grid-area: Header;
-}
-main.Content{
-  grid-area: Content1;
-}
-footer.Footer{
-  grid-area: Footer;
-}
-
-@media only screen and (max-width: 550px) {
-  .App {
-    grid-template-columns: 1fr;
-    grid-template-rows: 40px 1fr 60px ;
-    grid-template-areas:
-    "Header"
-    "Content1"
-    "Footer";
-  }
 }

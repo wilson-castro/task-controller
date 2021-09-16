@@ -9,8 +9,8 @@ function ListTemplate({ title, cards }) {
   return (
     <Container className="CardsGroup">
       <Header>{title}</Header>
-      <div className="Cards">
-        {cards.map(card => <Card key={card.id} text={card.text} />)}
+      <div className="list-cards">
+        {cards.map(card => <Card key={card.id} card={card} />)}
         <ActionButton />
       </div>
     </Container>
