@@ -1,4 +1,5 @@
 import { CONSTANTS } from "../actions"
+import { db } from "../../backend/.firebase";
 
 export const addList = (list) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -25,14 +26,40 @@ export const addList = (list) => {
   }
 }
 
+
 export const updateList = (data) => {
+
   return (dispatch, getState, { getFirebase }) => {
     const firestore = getFirebase().firestore();
-    const { list, newCard } = data
+    const { list, newCard } = data;
+    const db = firestore.collection("lists");
 
-    console.log(list)
-    console.log(firestore.collection("lists").doc())
+    // SEARCH THE LISTS BY ID
+    db.where("id", "==", list.id)
+      .get()
+      .then(function (querySnapshot) {//CONVERT DATA
 
+        querySnapshot.forEach(function (doc) {
+
+          db.doc(doc.id).set({ ...list, }, { merge: true })
+            .then(() => {
+              dispatch({
+                type: CONSTANTS.ADD_CARD,
+                payload: {
+                  card: newCard,
+                  listID: list.id
+                }
+              });
+            })
+            .catch((err) => {
+              dispatch({
+                type: CONSTANTS.UPDATE_ERR,
+                err,
+              });
+            });
+
+        });
+      })
 
   };
 };
@@ -60,3 +87,4 @@ export const updateList = (data) => {
 // });
 // };
 // };
+
