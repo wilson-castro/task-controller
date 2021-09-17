@@ -3,12 +3,16 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 
+import { objEmptyTest } from '../../utils/objEmptyTest';
 import List from "../List/ActivitiesList";
 import { Container } from './styles';
-import ActionButton from '../template/ActionButton';
+import ActionButton from '../template/ActionButton/';
 
 class Main extends Component {
+
   render() {
+
+
     return (
       <main className="Content1">
         <Container>
@@ -23,8 +27,19 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => {
-  const lists = state.firestore.ordered.lists;
-  return { lists: lists };
+  const objList = state.firestore.data.lists;//CATCH FROM DATABASE
+  const objListTested = objEmptyTest(objList) ? {} : objList//SAVE FROM REFRESH OR VOID
+
+  if (!objEmptyTest(objList)) {
+    const arraysLists = Object.entries(objListTested)//ARRAY OF FIREBASE ID AND DATA
+    const lists = arraysLists.map((arraylist) => ({ ...arraylist[1] }))
+
+    return { lists }
+  } else {
+
+    return { lists: [] };
+  }
+
 };
 
 export default compose(

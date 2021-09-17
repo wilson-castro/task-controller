@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addList, updateList } from "../../store/actions";
+import { addList, updateList } from "../../../store/actions";
 
 import { MdAdd } from "react-icons/md";
 
-import AddCardPopup from "./AddCardPopup";
-import AddGroupButton from "./AddGroupButton";
-import StyledAddButton from "./AddButton"
+import AddCard from "../popupAddCard/";
+import AddGroup from "../inputAddGroup/";
+import StyledAddButton from "../StyledAddButton"
 
 class ActionButton extends Component {
+
   constructor(props) {
     super(props)
     this.keyHandler = this.keyHandler.bind(this)
@@ -17,6 +18,13 @@ class ActionButton extends Component {
     formOpen: false,
     modalOpen: false,
     text: "",
+    dataDeadline: ""
+  }
+
+  // CLEAR INPUTS
+  clearInputs = () => {
+    this.setState({ text: "" })
+    return;
   }
 
   //CACTHER KEY
@@ -45,37 +53,41 @@ class ActionButton extends Component {
   handleInputChange = event => (
     this.setState({ text: event.target.value })
   )
+  // CHANGE THE DATE INPUT CONTROLLED COMPONENT
+  handleDateChange = event => (
+    this.setState({ dataDeadline: event.target.value })
+  )
 
   //ADD A CARD/UPDATE_LIST AND ADD A LIST
   handleAddList = () => {
     const { text } = this.state;
     const id = this.props.list.length || 0
     if (text) {
-      this.props.addList({ text, id })
-      this.setState({ text: "" })
+      this.props.addList({ text, id, })
+      this.closeForm()
+      this.clearInputs()
     }
     return;
   }
   handleAddCard = () => {
     const { listObj: oldList } = this.props
-
     const { text } = this.state
-    const id = oldList.cards.length || 0
-    const newCard = {
-      id,
-      text,
-      completed: false,
-      dataDeadline: "14/02/2002"
-    }
-    const list = { ...oldList, cards: [...oldList.cards, newCard] }
+    const { dataDeadline } = this.state
 
-    this.props.updateList({ list, newCard })
-    console.log();
-    this.setState({ text: "" })
-    // if (text) {
-    //   dispatch(addCard(listID, text))
-    //   this.setState({ text: "" })
-    // }
+    if (text) {
+      const id = oldList.cards.length || 0
+      const newCard = {
+        id,
+        text,
+        completed: false,
+        dataDeadline: dataDeadline
+      }
+      const list = { ...oldList, cards: [...oldList.cards, newCard] }
+
+      this.props.updateList({ list, newCard })
+      this.clearInputs()
+    }
+    return;
   }
 
   //ADD BUTTON CARD OR GRUP
@@ -101,27 +113,28 @@ class ActionButton extends Component {
 
   renderForm = () => {
     const { list } = this.props
-
     //Check for set the text
     const placeholder = list ? "Digite o nome do grupo..." : "Digite a atividade..."
     const buttonTitle = list ? "Salvar" : "Adicionar card"
 
     //Test if do add a group or add a card
     return list ? (
-      <AddGroupButton
+      <AddGroup
         placeholder={placeholder}
-        onBlur={this.closeForm}
+        close={{ closeForm: this.closeForm, clearInputs: this.clearInputs }}
         value={this.state.text}
         onChange={this.handleInputChange}
         onKeyUp={this.keyHandler}
         buttonTitle={buttonTitle}
-        onMouseDown={this.handleAddList}
       />
     ) : (
-      <AddCardPopup placeholder={placeholder}
-        onBlur={this.closeForm}
-        value={this.state.text}
-        onChange={this.handleInputChange}
+      <AddCard placeholder={placeholder}
+        close={{ closeForm: this.closeForm, clearInputs: this.clearInputs }}
+        value={{ valueText: this.state.text, valueDate: this.state.dataDeadline }}
+        onChange={{
+          handleInputChange: this.handleInputChange,
+          handleDateChange: this.handleDateChange
+        }}
         saveCard={this.handleAddCard}
       />
     )

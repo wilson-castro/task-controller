@@ -2,15 +2,22 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import TextArea from "react-textarea-autosize";
 
-import { styles } from "../../styles/ButtonStyles";
-function AddGroupButton(props) {
+import { styles } from "./styles";
+function AddGroup(props) {
+
+  const OnBlur = () => {
+    const { closeForm, clearInputs } = props.close
+    closeForm()
+    clearInputs()
+  }
+
   return (
     <div style={{ marginTop: "1rem" }}>
       <Card style={styles.cardStyleContainer}>
         <TextArea
           placeholder={props.placeholder}
           autoFocus
-          onBlur={props.onBlur}
+          onBlur={OnBlur}
           value={props.value}
           onChange={props.onChange}
           onKeyUp={props.onKeyUp}
@@ -21,4 +28,4 @@ function AddGroupButton(props) {
   )
 }
 
-export default AddGroupButton;
+export default AddGroup;

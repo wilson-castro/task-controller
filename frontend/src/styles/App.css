@@ -1,18 +1,1 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
-
-:root{
-  --header-height: 50px;
-  --footer-height: 40px;
-  --header-bgColor:rgb(102, 92, 196);
-  --header-fontColor:rgb(68, 99, 240);
-  --footer-bgColor: rgb(216, 210, 242);
-
-  --shadow: 
-  0 2px 23px 0 rgba(0, 0, 0, 0.1),
-  0 2px 49px 0 rgba(0, 0, 0, 0.1);
-}
-
-.App{
-  background: #FFF;
-  height: 100vh;
-}

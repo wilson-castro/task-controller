@@ -11,10 +11,28 @@
   min-width: 240px;
   margin-bottom: 8;
   position: relative;
-
 }
 
 .card:hover {
   background: #f5f6f7;
 }
 
+.Card-DeadLine {
+  width: fit-content;
+  margin-top: 4px;
+  padding: 2px;
+  border-radius: 9px;
+}
+
+.form-check-input{
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.form-check{
+  margin:0;
+  padding-left:30px;
+  padding-right: 10px;
+  display: flex;
+  align-items: baseline;
+}

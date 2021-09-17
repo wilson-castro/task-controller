@@ -4,8 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import React, { Component } from 'react'
 import { ToastContainer } from "react-toastify";
+import "../styles/App.css"
 
-import '../styles/App.css';
 import Main from './Main';
 import Header from './Header';
 

@@ -8,4 +8,8 @@ export const Container = styled.div`
   >div{
     margin-left: 1rem;
   }
+  >div:last-of-type{
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
 `;

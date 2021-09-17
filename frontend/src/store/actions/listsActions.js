@@ -1,5 +1,4 @@
 import { CONSTANTS } from "../actions"
-import { db } from "../../backend/.firebase";
 
 export const addList = (list) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -40,8 +39,8 @@ export const updateList = (data) => {
       .then(function (querySnapshot) {//CONVERT DATA
 
         querySnapshot.forEach(function (doc) {
-
-          db.doc(doc.id).set({ ...list, }, { merge: true })
+          //doc.id doc.data()
+          db.doc(doc.id).update({ ...list })
             .then(() => {
               dispatch({
                 type: CONSTANTS.ADD_CARD,
@@ -63,28 +62,3 @@ export const updateList = (data) => {
 
   };
 };
-
-// firestore
-// .collection("lists")
-// .doc(list.id)
-// .set({
-//   ...list,
-// })
-// .then(() => {
-//   dispatch({
-//     type: CONSTANTS.ADD_CARD,
-//     payload: {
-//       card: newCard,
-//       listID: list.id
-//     }
-//   });
-// })
-// .catch((err) => {
-//   dispatch({
-//     type: CONSTANTS.UPDATE_ERR,
-//     err,
-//   });
-// });
-// };
-// };
-

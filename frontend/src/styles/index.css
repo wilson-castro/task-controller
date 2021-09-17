@@ -1,0 +1,32 @@
+:root{
+  --header-height: 50px;
+  --footer-height: 40px;
+  --header-bgColor:rgb(102, 92, 196);
+  --header-fontColor:rgb(68, 99, 240);
+  --footer-bgColor: rgb(216, 210, 242);
+
+  --shadow: 
+  0 2px 23px 0 rgba(0, 0, 0, 0.1),
+  0 2px 49px 0 rgba(0, 0, 0, 0.1);
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family:'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul{
+  list-style: none;
+}
+
+.App{
+background: #FFF;
+height: 100vh;
+}

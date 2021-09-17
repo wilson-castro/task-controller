@@ -4,7 +4,6 @@ const StyledAddButton = styled.div`
 
   display: flex;
   align-items: center;
-
   height: 36px;
   width: 240px;
   margin-top: 1rem;
@@ -18,6 +17,7 @@ const StyledAddButton = styled.div`
   font-weight: 500; 
 
   min-height: 32px;
+  min-width: 200px;
 
   transition: background-color 85ms ease-in, opacity 40ms ease-in,
     border-color 85ms ease-in;
