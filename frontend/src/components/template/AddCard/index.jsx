@@ -13,11 +13,21 @@ import { styles } from "./styles";
 
 export default function AddCard(props) {
 
-  const { handleInputChange, handleDateChange } = props.onChange
-  const { valueText, valueDate } = props.value
-  const { closeForm, clearInputs } = props.close
+  // const { handleAddCard } = props.saveCard
+  const closeModal = props.close
 
+  const currentDate = () => (new Date().toISOString().slice(0, 10))
+
+  const [text, setText] = React.useState('')
   const [open, setOpen] = React.useState(false);
+  const [date, setDate] = React.useState(`${currentDate()}`)
+
+  const handleInputChange = (event) => (
+    setText(event.target.value)
+  )
+  const handleDateChange = (event) => (
+    setDate(event.target.value)
+  )
 
   React.useEffect(() => {
     handleClickOpen()
@@ -29,12 +39,11 @@ export default function AddCard(props) {
   };
   const handleClose = () => {
     setOpen(false);
-    clearInputs();
-    setTimeout(closeForm, 100)
+    setTimeout(closeModal, 100)
 
   };
   const onClicked = () => {
-    props.saveCard()
+    props.saveCard(text, date)
     handleClose();
   }
 
@@ -46,7 +55,7 @@ export default function AddCard(props) {
           <div>
             <TextField id="date" label="Data de Entrega"
               type="date"
-              value={valueDate}
+              value={date}
               onChange={handleDateChange}
               InputLabelProps={{ shrink: true, }}
             />
@@ -54,9 +63,9 @@ export default function AddCard(props) {
           <div>
             <Card style={styles.cardStyleContainer}>
               <TextArea
-                placeholder={props.placeholder}
+                placeholder={"Digite a atividade"}
                 autoFocus
-                value={valueText}
+                value={text}
                 onChange={handleInputChange}
                 style={styles.styleTextArea}
               />

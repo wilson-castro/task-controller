@@ -4,15 +4,15 @@ import { CONSTANTS } from "../actions";
 const errorsReducer = (state = {}, action) => {
   switch (action.type) {
     case CONSTANTS.ADD_ERR: {
-      toast.error("An error occurred");
+      toast.error("Um erro ocorreu ao tentar adicionar...");
       return state;
     }
     case CONSTANTS.REMOVE_ERR: {
-      toast.error("A remove error occured....");
+      toast.error("Um erro ocorreu durante a remoção...");
       return state;
     }
     case CONSTANTS.UPDATE_ERR: {
-      toast.error("A change error occured...");
+      toast.error("Um ocorreu ao tentar atelrar os dados...");
       return state;
     }
     default:

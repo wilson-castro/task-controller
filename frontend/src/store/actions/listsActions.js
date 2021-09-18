@@ -3,19 +3,10 @@ import { CONSTANTS } from "../actions"
 export const addList = (list) => {
   return (dispatch, getState, { getFirebase }) => {
     const firestore = getFirebase().firestore();
-    const { text: title, id } = list
+    const { title, id } = list
 
     firestore.collection("lists").add({
-      title, id: id, cards: []
-    }).then(() => {
-      dispatch({
-        type: CONSTANTS.ADD_LIST,
-        payload: {
-          title,
-          id: id,
-          cards: []
-        }
-      });
+      title, id, cards: []
     }).catch((err) => {
       dispatch({
         type: CONSTANTS.ADD_ERR,
@@ -23,14 +14,13 @@ export const addList = (list) => {
       });
     });
   }
-}
-
+};
 
 export const updateList = (data) => {
 
   return (dispatch, getState, { getFirebase }) => {
     const firestore = getFirebase().firestore();
-    const { list, newCard } = data;
+    const { list } = data;
     const db = firestore.collection("lists");
 
     // SEARCH THE LISTS BY ID
@@ -41,15 +31,6 @@ export const updateList = (data) => {
         querySnapshot.forEach(function (doc) {
           //doc.id doc.data()
           db.doc(doc.id).update({ ...list })
-            .then(() => {
-              dispatch({
-                type: CONSTANTS.ADD_CARD,
-                payload: {
-                  card: newCard,
-                  listID: list.id
-                }
-              });
-            })
             .catch((err) => {
               dispatch({
                 type: CONSTANTS.UPDATE_ERR,
@@ -62,3 +43,20 @@ export const updateList = (data) => {
 
   };
 };
+
+export const removeList = (list) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+    firestore
+      .collection("lists")
+      .doc(list._id)
+      .delete()
+      .catch((err) => {
+        dispatch({
+          type: CONSTANTS.REMOVE_ERR,
+          err,
+        });
+      });
+  };
+};
+
