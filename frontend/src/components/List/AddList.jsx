@@ -15,12 +15,11 @@ class AddList extends Component {
 
   createList = () => {
     const { title } = this.state;
-    const id = this.props.lastID
+    const index = this.props.lastID
 
     this.props.toggleAddingList();
     if (title) {
-      console.log(this.state);
-      this.props.addList({ title, id, })
+      this.props.addList({ title, index, })
     }
   };
 

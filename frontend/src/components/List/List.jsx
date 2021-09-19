@@ -68,10 +68,11 @@ class List extends Component {
 
   deleteList = () => {
     const { list } = this.props;
+    this.props.updateList(list);
     if (window.confirm("Tem certeza que deseja remover esse grupo?")) {
-      this.setState({ title: "" })
-      this.props.removeList(list)
-      window.location.reload()
+      this.setState({ title: "" });
+      this.props.removeList(list);
+      // window.location.reload()
     }
 
     return;

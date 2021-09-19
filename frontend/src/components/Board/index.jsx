@@ -9,6 +9,7 @@ import '../../styles/Board.css'
 import { objEmptyTest } from '../../utils/objEmptyTest';
 import List from "../List/List";
 import AddList from "../List/AddList";
+import { movedList } from '../../store/actions';
 // import { Container } from './styles';
 // import ActionButton from '../template/ActionButton/';
 
@@ -32,6 +33,11 @@ class Board extends Component {
     if (type === "COLUMN") {
       // Prevent update if nothing has changed
       if (source.index !== destination.index) {
+
+        console.log(source);
+        console.log(destination);
+
+        this.props.movedList({ list1Index: destination.index, list2Index: source.index })
 
         //update list changing the list position id
         //   dispatch({
@@ -99,6 +105,13 @@ class Board extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    movedList: (indexes) => dispatch(movedList(indexes)),
+  };
+};
+
+
 const mapStateToProps = state => {
 
   const objList = state.firestore.data.lists;//CATCH FROM DATABASE
@@ -117,9 +130,9 @@ const mapStateToProps = state => {
 };
 
 export default compose(
-  connect(mapStateToProps), firestoreConnect((ownProps) => [{
+  connect(mapStateToProps, mapDispatchToProps), firestoreConnect((ownProps) => [{
     collection: "lists",
-    orderBy: ["id", "asc"]
+    orderBy: ["index", "asc"]
   },
   ])
 )(Board)
