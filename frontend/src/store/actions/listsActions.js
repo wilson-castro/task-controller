@@ -44,53 +44,6 @@ export const updateList = (data) => {
   };
 };
 
-export const movedList = (data) => {
-
-  return (dispatch, getState, { getFirebase }) => {
-    const firestore = getFirebase().firestore();
-    const { list1Index, list2Index } = data
-    const db = firestore.collection("lists");
-
-    //update two list changing index
-
-    // SEARCH THE LISTS BY ID
-    db.where("index", "==", list1Index)
-      .get()
-      .then(function (querySnapshot) {//CONVERT DATA
-
-        querySnapshot.forEach(function (list) {
-          //update the list changing the index
-          db.doc(list.id).update({ ...list.data(), index: list2Index })
-            .catch((err) => {
-              dispatch({
-                type: CONSTANTS.UPDATE_ERR,
-                err,
-              });
-            });
-
-        });
-      })
-
-    db.where("index", "==", list2Index)
-      .get()
-      .then(function (querySnapshot) {//CONVERT DATA
-
-        querySnapshot.forEach(function (list) {
-          //update the list changing the index
-          db.doc(list.id).update({ ...list.data(), index: list1Index })
-            .catch((err) => {
-              dispatch({
-                type: CONSTANTS.UPDATE_ERR,
-                err,
-              });
-            });
-
-        });
-      })
-
-  };
-};
-
 export const removeList = (list) => {
   return (dispatch, getState, { getFirebase }) => {
     const firestore = getFirebase().firestore();

@@ -74,7 +74,6 @@ class Card extends Component {
       const { list: oldLists } = this.props
       const { cards: oldCardList } = oldLists
 
-      console.log(oldLists);
       const filterDeletedCard = card => card.id !== cardDeletedId
       const newCardList = oldCardList.filter(filterDeletedCard)
 

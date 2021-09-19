@@ -9,7 +9,7 @@ import '../../styles/Board.css'
 import { objEmptyTest } from '../../utils/objEmptyTest';
 import List from "../List/List";
 import AddList from "../List/AddList";
-import { movedList } from '../../store/actions';
+import { movedList, updateList } from '../../store/actions';
 // import { Container } from './styles';
 // import ActionButton from '../template/ActionButton/';
 
@@ -34,10 +34,10 @@ class Board extends Component {
       // Prevent update if nothing has changed
       if (source.index !== destination.index) {
 
-        console.log(source);
-        console.log(destination);
+        // console.log(source);
+        // console.log(destination);
 
-        this.props.movedList({ list1Index: destination.index, list2Index: source.index })
+        // this.props.movedList({ list1Index: destination.index, list2Index: source.index })
 
         //update list changing the list position id
         //   dispatch({
@@ -56,17 +56,48 @@ class Board extends Component {
       source.index !== destination.index ||
       source.droppableId !== destination.droppableId
     ) {
+      const souceListId = source.droppableId
+      const destlistId = destination.droppableId
+      const oldCardIndex = source.index
+      const newCardIndex = destination.index
 
-      //update list changing the card position id
-      // dispatch({
-      //   type: "MOVE_CARD",
-      //   payload: {
-      //     sourceListId: source.droppableId,
-      //     destListId: destination.droppableId,
-      //     oldCardIndex: source.index,
-      //     newCardIndex: destination.index
-      //   }
-      // });
+      // Move within the same list
+      if (souceListId === destlistId) {
+        const filterList = list => list._id === souceListId
+        const list = this.props.lists.filter(filterList)[0]
+        const cards = Array.from(list.cards)
+
+        const card1 = list.cards[oldCardIndex]
+        const card1Index = cards.indexOf(card1)
+        const card2 = list.cards[newCardIndex]
+        const card2Index = cards.indexOf(card2)
+
+        const [removedCard] = cards.splice(card1Index, 1);
+        cards.splice(card2Index, 0, removedCard);
+
+        list.cards = [...cards]
+        this.props.updateList(list);
+        return;
+      }
+      else {
+        const filterList1 = list => list._id === souceListId
+        const list1 = this.props.lists.filter(filterList1)[0]
+        const filterList2 = list => list._id === destlistId
+        const list2 = this.props.lists.filter(filterList2)[0]
+
+        const sourceCards = [...list1.cards]
+        const [removedCard] = sourceCards.splice(oldCardIndex, 1);
+        const destinationCards = [...list2.cards]
+        destinationCards.splice(newCardIndex, 0, removedCard);
+
+        list1.cards = [...sourceCards]
+        list2.cards = [...destinationCards]
+
+        this.props.updateList(list1);
+        this.props.updateList(list2);
+
+      }
+
     }
   };
 
@@ -107,7 +138,7 @@ class Board extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    movedList: (indexes) => dispatch(movedList(indexes)),
+    updateList: (list) => dispatch(updateList(list)),
   };
 };
 
