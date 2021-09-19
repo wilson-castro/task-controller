@@ -6,7 +6,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { colorCheckBox } from '../../utils/colorCheckBox';
 import { convertDateToPhrase } from "../../utils/convertDateToPhrase";
 
-import AddCard from "../template/AddCard";
+import AddCard from "./AddCard";
 import { removeList, updateList } from "../../store/actions";
 
 class Card extends Component {

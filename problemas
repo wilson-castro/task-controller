@@ -1,0 +1,13 @@
+
+	--bugs :
+	 - sistema de datas ano bissexto
+	 - mudei referencial pq a forma de tratar o drag and drop do outro
+	 conflitava com as edições de campos
+	 - não consegui deixar responsivo com o drag'n'drop
+	 - bug da data : o comparador está pegando a data de outro lugar e assim é atrasada
+	 - bug do checkbox não seguir o padrão da situação da atividade
+	 - Acessibilidade desprezada
+	 - delete precisar dar reload pra retirar o elemento, não atualiza o estado
+	 - coisas flicando ( dando refresh pra um estado desatualizado e depois atualizando pro estado correto)
+	 - bug na hora de digitar o titulo
+	 - Não feito : Procura por lista e notificação com listas não completas

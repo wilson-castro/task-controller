@@ -146,21 +146,18 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
 
-  // console.log(state);
-  // const objList = state.firestore.data.lists;//CATCH FROM DATABASE
-  // const objListTested = objEmptyTest(objList) ? {} : objList//SAVE FROM REFRESH OR VOID
+  const objList = state.firestore.data.lists;//CATCH FROM DATABASE
+  const objListTested = objEmptyTest(objList) ? {} : objList//SAVE FROM REFRESH OR VOID
 
-  // if (!objEmptyTest(objList)) {
-  //   const arraysLists = Object.entries(objListTested)//ARRAY OF FIREBASE ID AND DATA
-  //   const lists = arraysLists.map((arraylist) => ({ ...arraylist[1], _id: arraylist[0] }))//Array data and Firestore id
+  if (!objEmptyTest(objList)) {
+    const arraysLists = Object.entries(objListTested)//ARRAY OF FIREBASE ID AND DATA
+    const lists = arraysLists.map((arraylist) => ({ ...arraylist[1], _id: arraylist[0] }))//Array data and Firestore id
 
-  //   return { lists }
-  // }
-  // else {
-  //   return { lists: [] };
-  // }
-
-  return { lists: state.lists }
+    return { lists }
+  }
+  else {
+    return { lists: [] };
+  }
 
 };
 

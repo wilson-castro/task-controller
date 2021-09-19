@@ -34,12 +34,6 @@ export const addList = (list) => {
     })
       .then(resp =>
         dispatch(getList()))
-      .catch((err) => {
-        dispatch({
-          type: CONSTANTS.ADD_ERR,
-          err,
-        });
-      });
   }
 };
 
@@ -82,12 +76,6 @@ export const removeList = (list) => {
       .delete()
       .then(resp =>
         dispatch(getList()))
-      .catch((err) => {
-        dispatch({
-          type: CONSTANTS.REMOVE_ERR,
-          err,
-        });
-      });
   };
 };
 

@@ -7,7 +7,7 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 
 import Card from "../Cards/Card";
 import ListEditor from "./ListEditor";
-import AddCard from "../template/AddCard/"
+import AddCard from "../Cards/AddCard/"
 import { removeList, updateList } from "../../store/actions";
 
 // import shortid from "shortid";
