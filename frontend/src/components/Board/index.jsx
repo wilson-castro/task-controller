@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
+import '../../styles/Board.css'
+
 import { compose } from "redux";
+import { connect } from "react-redux";
+import React, { Component } from 'react';
 import { firestoreConnect } from "react-redux-firebase";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import '../../styles/Board.css'
-
-import { objEmptyTest } from '../../utils/objEmptyTest';
 import List from "../List/List";
 import AddList from "../List/AddList";
-import { movedList, updateList } from '../../store/actions';
-// import { Container } from './styles';
-// import ActionButton from '../template/ActionButton/';
+import { updateList } from '../../store/actions';
+import { objEmptyTest } from '../../utils/objEmptyTest';
 
 class Board extends Component {
 
@@ -27,26 +25,24 @@ class Board extends Component {
     // dropped outside the allowed zones
     if (!destination) return;
 
-    // const { dispatch } = this.props;
-
     // Move list
     if (type === "COLUMN") {
       // Prevent update if nothing has changed
       if (source.index !== destination.index) {
 
-        // console.log(source);
-        // console.log(destination);
+        const lists = [...this.props.lists]
+        const oldListIndex = source.index
+        const list1 = lists[oldListIndex]
+        const newListIndex = destination.index
+        const list2 = lists[newListIndex]
 
-        // this.props.movedList({ list1Index: destination.index, list2Index: source.index })
+        list1.index = newListIndex
+        list2.index = oldListIndex
 
-        //update list changing the list position id
-        //   dispatch({
-        //     type: "MOVE_LIST",
-        //     payload: {
-        //       oldListIndex: source.index,
-        //       newListIndex: destination.index
-        //     }
-        //   });
+        this.props.updateList(list1)
+        this.props.updateList(list2)
+
+        return;
       }
       return;
     }
