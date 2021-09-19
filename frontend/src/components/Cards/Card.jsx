@@ -3,15 +3,16 @@ import "../../styles/Card.css";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Draggable } from "react-beautiful-dnd";
-import { colorCheckBox } from '../../utils/colorCheckBox';
+import { colorCheckBox, checkedBox } from '../../utils/colorCheckBox';
 import { convertDateToPhrase } from "../../utils/convertDateToPhrase";
 
 import CardEditor from "./CardEditor";
+import { removeList, updateList } from "../../store/actions";
 
 class Card extends Component {
   state = {
     hover: false,
-    editing: false
+    editing: false,
   };
 
   startHover = () => this.setState({ hover: true });
@@ -21,12 +22,12 @@ class Card extends Component {
     this.setState({
       hover: false,
       editing: true,
-      text: this.props.card.text
+      text: this.props.card.text,
     });
 
   endEditing = () => this.setState({ hover: false, editing: false });
 
-  editCard = async text => {
+  editCard = text => {
     // const { card, dispatch } = this.props;
 
     this.endEditing();
@@ -37,6 +38,19 @@ class Card extends Component {
     //   payload: { cardId: card._id, cardText: text }
     // });
   };
+
+  updateActivityStatus = () => {
+    const updateCard = { ...this.props.card, completed: !this.props.card.completed }
+    const oldList = this.props.list
+    const cardId = updateCard.id
+
+    const oldListCards = [...oldList.cards]
+    const updateListCards = oldListCards.map(card => card.id === cardId ? updateCard : card)
+
+    const updatedList = { ...oldList, cards: updateListCards }
+
+    this.props.updateList(updatedList);
+  }
 
   deleteCard = async () => {
     // const { listId, card, dispatch } = this.props;
@@ -84,9 +98,16 @@ class Card extends Component {
                   onMouseEnter={this.endHover}
                   onMouseLeave={this.startHover}
                 >
-                  <div className={`Card-DeadLine ${colorCheckBox(card)}`}>
-                    <div className="form-check" onMouseDown={() => console.log(this.props.list)}>
-                      <input className="form-check-input" type="checkbox" defaultChecked={card.completed} />
+                  <div onClick={this.updateActivityStatus}
+                    className={`Card-DeadLine ${colorCheckBox(card)}`}>
+                    <div className="form-check" >
+
+                      {card.completed ?
+                        (<input className="form-check-input" type="checkbox"
+                          defaultChecked={true} />) :
+                        <input className="form-check-input" type="checkbox"
+                          defaultChecked={false} />}
+
                       <div className="Card-DeadLine-Icon" >
                         <ion-icon name="clock" />
                       </div>
@@ -114,5 +135,16 @@ class Card extends Component {
     }
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateList: (list) => dispatch(updateList(list)),
+    removeList: (list) => dispatch(removeList(list))
+  };
+};
 
-export default connect()(Card);
+const mapStateToProps = state => {
+  return state
+}
+
+// EXPORT COMPONENT
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

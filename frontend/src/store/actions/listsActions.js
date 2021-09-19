@@ -20,7 +20,7 @@ export const updateList = (data) => {
 
   return (dispatch, getState, { getFirebase }) => {
     const firestore = getFirebase().firestore();
-    const { list } = data;
+    const list = data;
     const db = firestore.collection("lists");
 
     // SEARCH THE LISTS BY ID
