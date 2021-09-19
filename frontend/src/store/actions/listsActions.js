@@ -1,5 +1,29 @@
 import { CONSTANTS } from "../actions"
 
+
+export const getList = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+    const db = firestore.collection("lists");
+    db.orderBy("index", "asc")
+      .get()
+      .then(lists => {
+        let _lists = []
+        lists.forEach(list => {
+          _lists.push({ _id: list.id, ...list.data() })
+        })
+        return _lists
+      }).then(resp =>
+        dispatch({
+          type: "LIST_SEARCHED",
+          payload: resp
+        }))
+
+  };
+
+}
+
+
 export const addList = (list) => {
   return (dispatch, getState, { getFirebase }) => {
     const firestore = getFirebase().firestore();
@@ -7,12 +31,15 @@ export const addList = (list) => {
 
     firestore.collection("lists").add({
       title, index, cards: []
-    }).catch((err) => {
-      dispatch({
-        type: CONSTANTS.ADD_ERR,
-        err,
+    })
+      .then(resp =>
+        dispatch(getList()))
+      .catch((err) => {
+        dispatch({
+          type: CONSTANTS.ADD_ERR,
+          err,
+        });
       });
-    });
   }
 };
 
@@ -39,7 +66,8 @@ export const updateList = (data) => {
             });
 
         });
-      })
+      }).then(resp =>
+        dispatch(getList()))
 
   };
 };
@@ -52,6 +80,8 @@ export const removeList = (list) => {
       .collection("lists")
       .doc(list._id)
       .delete()
+      .then(resp =>
+        dispatch(getList()))
       .catch((err) => {
         dispatch({
           type: CONSTANTS.REMOVE_ERR,
