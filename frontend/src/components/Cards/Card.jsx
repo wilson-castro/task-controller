@@ -3,40 +3,55 @@ import "../../styles/Card.css";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Draggable } from "react-beautiful-dnd";
-import { colorCheckBox, checkedBox } from '../../utils/colorCheckBox';
+import { colorCheckBox } from '../../utils/colorCheckBox';
 import { convertDateToPhrase } from "../../utils/convertDateToPhrase";
 
-import CardEditor from "./CardEditor";
+import AddCard from "../template/AddCard";
 import { removeList, updateList } from "../../store/actions";
 
 class Card extends Component {
   state = {
     hover: false,
     editing: false,
+    modalOpen: false,
   };
-
+  openModal = () => {
+    this.setState({ modalOpen: true })
+  }
+  closeModal = () => {
+    this.setState({ modalOpen: false })
+    this.endEditing();
+  }
   startHover = () => this.setState({ hover: true });
   endHover = () => this.setState({ hover: false });
 
   startEditing = () =>
     this.setState({
       hover: false,
-      editing: true,
       text: this.props.card.text,
     });
 
-  endEditing = () => this.setState({ hover: false, editing: false });
+  endEditing = () => this.setState({ hover: false });
 
-  editCard = text => {
-    // const { card, dispatch } = this.props;
+  editCard = (text, dataDeadline) => {
+    const { list: oldList } = this.props
+    console.log(oldList);
+    console.log(text, dataDeadline);
+    console.log(this.props.card);
 
-    this.endEditing();
+    // if (text) {
+    //   const id = shortid.generate()
+    //   const newCard = {
+    //     id,
+    //     text,
+    //     completed: false,
+    //     dataDeadline
+    //   }
+    //   const list = { ...oldList, cards: [...oldList.cards, newCard] }
 
-    //update list changing the card text
-    // dispatch({
-    //   type: "CHANGE_CARD_TEXT",
-    //   payload: { cardId: card._id, cardText: text }
-    // });
+    //   this.props.updateList({ list })
+    // }
+    return;
   };
 
   updateActivityStatus = () => {
@@ -52,87 +67,95 @@ class Card extends Component {
     this.props.updateList(updatedList);
   }
 
-  deleteCard = async () => {
-    // const { listId, card, dispatch } = this.props;
+  deleteCard = () => {
+    if (window.confirm("Deseja realmente deletar essa atividade?")) {
+      const card = this.props.card
+      const cardDeletedId = card.id
+      const { list: oldLists } = this.props
+      const { cards: oldCardList } = oldLists
 
-    if (window.confirm("Are you sure to delete this card?")) {
-      //update list deleting this card
-      // dispatch({
-      //   type: "DELETE_CARD",
-      //   payload: { cardId: card._id, listId }
-      // });
+      console.log(oldLists);
+      const filterDeletedCard = card => card.id !== cardDeletedId
+      const newCardList = oldCardList.filter(filterDeletedCard)
+
+      const newList = { ...oldLists, cards: newCardList }
+      this.props.updateList(newList);
+
     }
   };
 
+  renderPopup = () => (
+    <AddCard
+      card={this.props.card}
+      close={this.closeModal}
+      saveCard={this.editCard}
+      placeholder="Digite a atividade"
+      deleteCard={this.deleteCard}
+    />
+  )
+
   render() {
     const { card, index } = this.props;
-    const { hover, editing } = this.state;
-
-    if (!editing) {
-      return (
-        <Draggable draggableId={`${card.id}`} index={index}>
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              className="Card"
-              onMouseEnter={this.startHover}
-              onMouseLeave={this.endHover}
+    const { hover } = this.state;
+    return (
+      <Draggable draggableId={`${card.id}`} index={index}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className="Card"
+            onMouseEnter={this.startHover}
+            onMouseLeave={this.endHover}
+          >
+            <div onClick={this.openModal} className="Card-Content-Text"
             >
-              <div className="Card-Content-Text"
+              <div className="Card-Text">{card.text}</div>
+            </div>
+
+            {card.dataDeadline !== "" && (
+              <div className="Card-Content-DeadLine"
+                onMouseEnter={this.endHover}
+                onMouseLeave={this.startHover}
               >
-                {hover && (
-                  <div className="Card-Icons"
-                  >
-                    <div className="Card-Icon" onClick={this.startEditing}>
-                      <ion-icon name="create" />
+                <div onClick={this.updateActivityStatus}
+                  className={`Card-DeadLine ${colorCheckBox(card)}`}>
+                  <div className="form-check" >
+
+                    {card.completed ?
+                      (<input className="form-check-input" type="checkbox"
+                        defaultChecked={true} />) :
+                      <input className="form-check-input" type="checkbox"
+                        defaultChecked={false} />}
+
+                    <div className="Card-DeadLine-Icon" >
+                      <ion-icon name="clock" />
                     </div>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                      {convertDateToPhrase(card.dataDeadline)}
+                    </label>
                   </div>
-                )}
-                <div className="Card-Text">{card.text}</div>
+                </div>
               </div>
+            )}
 
-              {card.dataDeadline !== "" && (
-                <div className="Card-Content-DeadLine"
-                  onMouseEnter={this.endHover}
-                  onMouseLeave={this.startHover}
-                >
-                  <div onClick={this.updateActivityStatus}
-                    className={`Card-DeadLine ${colorCheckBox(card)}`}>
-                    <div className="form-check" >
-
-                      {card.completed ?
-                        (<input className="form-check-input" type="checkbox"
-                          defaultChecked={true} />) :
-                        <input className="form-check-input" type="checkbox"
-                          defaultChecked={false} />}
-
-                      <div className="Card-DeadLine-Icon" >
-                        <ion-icon name="clock" />
-                      </div>
-                      <label className="form-check-label" htmlFor="flexCheckDefault">
-                        {convertDateToPhrase(card.dataDeadline)}
-                      </label>
-                    </div>
+            <div>
+              {hover && (
+                <div className="Card-Icons" onClick={this.deleteCard}>
+                  <div className="Card-Icon">
+                    <ion-icon name="trash" />
                   </div>
                 </div>
               )}
-
             </div>
-          )}
-        </Draggable>
-      );
-    } else {
-      return (
-        <CardEditor
-          text={card.text}
-          onSave={this.editCard}
-          onDelete={this.deleteCard}
-          onCancel={this.endEditing}
-        />
-      );
-    }
+
+            {this.state.modalOpen ? this.renderPopup() : (false)}
+
+          </div>
+        )}
+      </Draggable>
+    );
+
   }
 }
 const mapDispatchToProps = (dispatch) => {

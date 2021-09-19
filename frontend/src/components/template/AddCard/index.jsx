@@ -13,14 +13,17 @@ import { styles } from "./styles";
 
 export default function AddCard(props) {
 
-  // const { handleAddCard } = props.saveCard
+  const saveCard = props.saveCard
   const closeModal = props.close
-
+  const placeholder = props.placeholder
+  const title = props.title
   const currentDate = () => (new Date().toISOString().slice(0, 10))
 
-  const [text, setText] = React.useState('')
+  const card = props.card || { text: "", dataDeadline: `${currentDate()}` }
+
+  const [text, setText] = React.useState(card.text)
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState(`${currentDate()}`)
+  const [date, setDate] = React.useState(card.dataDeadline)
 
   const handleInputChange = (event) => (
     setText(event.target.value)
@@ -43,7 +46,7 @@ export default function AddCard(props) {
 
   };
   const onClicked = () => {
-    props.saveCard(text, date)
+    saveCard(text, date)
     handleClose();
   }
 
@@ -63,7 +66,8 @@ export default function AddCard(props) {
           <div>
             <Card style={styles.cardStyleContainer}>
               <TextArea
-                placeholder={"Digite a atividade"}
+                title={title}
+                placeholder={placeholder}
                 autoFocus
                 value={text}
                 onChange={handleInputChange}

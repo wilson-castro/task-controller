@@ -39,7 +39,7 @@ class List extends Component {
       }
       const list = { ...oldList, cards: [...oldList.cards, newCard] }
 
-      this.props.updateList({ list })
+      this.props.updateList(list)
     }
     return;
   };
@@ -50,7 +50,7 @@ class List extends Component {
   handleChangeTitle = e => this.setState({ title: e.target.value });
 
   editListTitle = () => {
-    const { list } = this.props;
+    const list = this.props.list;
     const { title } = this.state;
 
     if (title) {
@@ -58,7 +58,7 @@ class List extends Component {
       list.title = title
       this.setState({ title: "" })
 
-      this.props.updateList({ list })
+      this.props.updateList(list)
     }
     this.setState({ title: "" })
     this.toggleEditingTitle();
@@ -68,7 +68,7 @@ class List extends Component {
 
   deleteList = () => {
     const { list } = this.props;
-    if (window.confirm("Tem certeza que deseja remover essa atividade?")) {
+    if (window.confirm("Tem certeza que deseja remover esse grupo?")) {
       this.setState({ title: "" })
       this.props.removeList(list)
       window.location.reload()
@@ -80,8 +80,8 @@ class List extends Component {
   renderPopup = () => (
     <AddCard
       close={this.closeModal}
-      onChange={this.addCard}
       saveCard={this.addCard}
+      placeholder="Digite a atividade"
     />
   )
 
